@@ -8,10 +8,12 @@ repositories {
 
 buildscript {
     repositories {
-        jcenter()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
     }
     dependencies {
-        classpath 'me.champeau.gradle:jmh-gradle-plugin:0.+'
+        classpath 'me.champeau.gradle:jmh-gradle-plugin:+'
     }
 }
 
@@ -31,16 +33,22 @@ dependencies {
 // jmh https://github.com/melix/jmh-gradle-plugin
 apply plugin: 'me.champeau.gradle.jmh'
 
+// https://github.com/melix/jmh-gradle-plugin
 jmh {
+    // https://github.com/CodeFX-org/lab-java8streamperformancebenchmark
     include = 'org\\.codefx\\.lab\\.streamperformance\\.*'
+    humanOutputFile = null
     resultsFile = project.file("${project.buildDir}/results.txt")
+    // useful for output https://github.com/jzillmann/jmh-visualizer
     resultFormat = 'JSON'
 
-    iterations = 25
+    timeOnIteration = '3s'
+    iterations = 5
     benchmarkMode = 'sample'
-    fork = 1
+    fork = 2
     timeUnit = 'ns'
-    warmupBatchSize = 3
+    warmup = '3s'
+    warmupBatchSize = 5
 }
 
 // caliper

@@ -25,6 +25,7 @@ public class StopwatchBenchmark {
         System.out.println("Timing starts");
 
         for(vCounter = 0; vCounter < BENCHMARKRUNS; ++vCounter) {
+            System.out.println("Starting run " + vCounter + " of " + BENCHMARKRUNS + ".");
             vTimeStart = System.nanoTime();
             // this is the code under test!
             TestCases.fib(ARGUMENT);
