@@ -1,0 +1,54 @@
+apply plugin: 'java'
+apply plugin: 'idea'
+
+repositories {
+    jcenter()
+    mavenCentral()
+}
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'me.champeau.gradle:jmh-gradle-plugin:0.+'
+    }
+}
+
+dependencies {
+    compile 'org.slf4j:slf4j-api:1.7.21'
+    testCompile 'junit:junit:4.12'
+}
+
+// Stopwatch
+sourceSets {
+    stopwatch
+}
+dependencies {
+    stopwatchCompile sourceSets.main.output
+}
+
+// jmh https://github.com/melix/jmh-gradle-plugin
+apply plugin: 'me.champeau.gradle.jmh'
+
+jmh {
+    include = 'org\\.codefx\\.lab\\.streamperformance\\.*'
+    resultsFile = project.file("${project.buildDir}/results.txt")
+    resultFormat = 'JSON'
+
+    iterations = 25
+    benchmarkMode = 'sample'
+    fork = 1
+    timeUnit = 'ns'
+    warmupBatchSize = 3
+}
+
+// caliper
+sourceSets {
+    caliper
+}
+dependencies{
+    caliperCompile 'com.google.guava:guava:11.+'
+    caliperCompile 'com.google.caliper:caliper:1.+'
+    caliperCompile sourceSets.main.output
+}

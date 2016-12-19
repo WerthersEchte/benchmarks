@@ -1,0 +1,16 @@
+# IntelliJ IDEA
+*iml
+*ipr
+*iws
+
+.idea
+
+# Gradle
+gradle
+.gradle
+
+# Java
+build
+generated
+
+*.log
